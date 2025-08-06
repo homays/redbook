@@ -22,6 +22,8 @@
         <module>redbook-auth</module>
         <!-- 平台基础设施层 -->
         <module>redbook-framework</module>
+        <!-- 实体层 -->
+        <module>redbook-domain</module>
     </modules>
 
     <properties>
@@ -42,6 +44,9 @@
         <spring-cloud.version>2022.0.0</spring-cloud.version>
         <lombok.version>1.18.30</lombok.version>
         <jackson.version>2.16.1</jackson.version>
+        <mybatis-plus.version>3.5.12</mybatis-plus.version>
+        <mybatis-plus-join.version>1.5.4</mybatis-plus-join.version>
+        <mysql-connector-java.version>8.0.29</mysql-connector-java.version>
     </properties>
 
     <!-- 统一依赖管理 -->
@@ -55,7 +60,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
             <!-- Spring Cloud Alibaba 官方依赖管理 -->
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
@@ -64,7 +68,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
             <!-- Spring Cloud 官方依赖管理 -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
@@ -74,37 +77,58 @@
                 <scope>import</scope>
             </dependency>
 
-            <!-- 避免编写那些冗余的 Java 样板式代码，如 get、set 等 -->
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
-            </dependency>
-
+            <!-- 项目服务模块 -->
             <dependency>
                 <groupId>com.ymkx</groupId>
                 <artifactId>redbook-common</artifactId>
                 <version>${revision}</version>
             </dependency>
+            <dependency>
+                <groupId>com.ymkx</groupId>
+                <artifactId>redbook-domain</artifactId>
+                <version>${revision}</version>
+            </dependency>
 
+            <!-- 第三方服务 -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
             <!-- Jackson -->
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
                 <version>${jackson.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-core</artifactId>
                 <version>${jackson.version}</version>
             </dependency>
-
             <!-- 业务接口日志组件 -->
             <dependency>
                 <groupId>com.ymkx</groupId>
                 <artifactId>redbook-starter-biz-operationlog</artifactId>
                 <version>${revision}</version>
+            </dependency>
+            <!-- Mybatis Plus -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <!-- Mybatis Plus Join-->
+            <dependency>
+                <groupId>com.github.yulichang</groupId>
+                <artifactId>mybatis-plus-join-boot-starter</artifactId>
+                <version>${mybatis-plus-join.version}</version>
+            </dependency>
+            <!-- MySQL 驱动 -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector-java.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

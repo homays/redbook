@@ -13,9 +13,9 @@
     <!-- 指定打包方式 -->
     <packaging>jar</packaging>
 
-    <artifactId>redbook-auth</artifactId>
+    <artifactId>redbook-domain</artifactId>
     <name>${project.artifactId}</name>
-    <description>redbook：认证服务（负责处理用户登录、注册、账号注销等）</description>
+    <description>redbook：实体服务（负责处理实体的增删改查逻辑）</description>
 
     <dependencies>
         <dependency>
@@ -34,15 +34,19 @@
             <artifactId>redbook-common</artifactId>
         </dependency>
 
-        <!-- 业务接口日志组件 -->
         <dependency>
-            <groupId>com.ymkx</groupId>
-            <artifactId>redbook-starter-biz-operationlog</artifactId>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.ymkx</groupId>
-            <artifactId>redbook-domain</artifactId>
+            <groupId>com.github.yulichang</groupId>
+            <artifactId>mybatis-plus-join-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
         </dependency>
     </dependencies>
 

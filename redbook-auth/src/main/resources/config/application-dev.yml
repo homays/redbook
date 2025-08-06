@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver # 指定数据库驱动类
+    # 数据库连接信息
+    url: jdbc:mysql://127.0.0.1:3306/redbook?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root # 数据库用户名
+    password: 21021036 # 数据库密码
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    com.ymkx.domain.mapper: debug
+    org.apache.ibatis: debug

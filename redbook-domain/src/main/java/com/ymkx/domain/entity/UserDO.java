@@ -1,5 +1,6 @@
-package com.ymkx.redbook.auth.controller;
+package com.ymkx.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,15 +12,15 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class User {
-    /**
-     * 昵称
-     */
-    private String nickName;
+@TableName("t_user")
+public class UserDO {
 
-    /**
-     * 创建时间
-     */
+    private Long id;
+
+    private String username;
+
     private LocalDateTime createTime;
+
+    private LocalDateTime updateTime;
 }
 
