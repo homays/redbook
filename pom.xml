@@ -47,6 +47,7 @@
         <mybatis-plus.version>3.5.12</mybatis-plus.version>
         <mybatis-plus-join.version>1.5.4</mybatis-plus-join.version>
         <mysql-connector-java.version>8.0.29</mysql-connector-java.version>
+        <hutool.version>5.8.38</hutool.version>
     </properties>
 
     <!-- 统一依赖管理 -->
@@ -129,6 +130,12 @@
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql-connector-java.version}</version>
+            </dependency>
+            <!-- hutool -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-ai</artifactId>
+                <version>${hutool.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
