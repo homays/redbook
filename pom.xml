@@ -22,7 +22,6 @@
         <module>redbook-auth</module>
         <!-- 平台基础设施层 -->
         <module>redbook-framework</module>
-        <module>redbook-framework/redbook-common</module>
     </modules>
 
     <properties>
@@ -42,6 +41,7 @@
         <spring-cloud-alibaba.version>2022.0.0.0</spring-cloud-alibaba.version>
         <spring-cloud.version>2022.0.0</spring-cloud.version>
         <lombok.version>1.18.30</lombok.version>
+        <jackson.version>2.16.1</jackson.version>
     </properties>
 
     <!-- 统一依赖管理 -->
@@ -84,6 +84,26 @@
             <dependency>
                 <groupId>com.ymkx</groupId>
                 <artifactId>redbook-common</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- Jackson -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+
+            <!-- 业务接口日志组件 -->
+            <dependency>
+                <groupId>com.ymkx</groupId>
+                <artifactId>redbook-starter-biz-operationlog</artifactId>
                 <version>${revision}</version>
             </dependency>
         </dependencies>

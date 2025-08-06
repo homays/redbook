@@ -21,6 +21,8 @@
     <modules>
         <!-- 通用工具组件 -->
         <module>redbook-common</module>
+        <!-- 接口日志组件 -->
+        <module>redbook-starter-biz-operationlog</module>
     </modules>
 
 </project>
