@@ -1,20 +1,15 @@
 package com.ymkx.redbook.auth;
 
-import com.ymkx.domain.entity.UserDO;
-import com.ymkx.domain.mapper.UserMapper;
-import com.ymkx.framework.common.util.JsonUtils;
 import jakarta.annotation.Resource;
-import net.minidev.json.JSONUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.time.LocalDateTime;
+import org.springframework.data.redis.core.RedisTemplate;
 
 @SpringBootTest
 class RedbookAuthApplicationTests {
 
     @Resource
-    private UserMapper userMapper;
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Test
     void contextLoads() {
@@ -22,19 +17,7 @@ class RedbookAuthApplicationTests {
 
     @Test
     void testInsert() {
-        UserDO userDO = UserDO.builder()
-                .username("ymkx")
-                .createTime(LocalDateTime.now())
-                .updateTime(LocalDateTime.now())
-                .build();
-
-        userMapper.insert(userDO);
-    }
-
-    @Test
-    void testSelect() {
-        UserDO userDO = userMapper.selectById(1953035569446219778L);
-        System.out.println(JsonUtils.toJsonString(userDO));
+        redisTemplate.opsForValue().set("name", "ymkx");
     }
 
 }
