@@ -44,6 +44,11 @@
             <groupId>com.ymkx</groupId>
             <artifactId>redbook-domain</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.ymkx</groupId>
+            <artifactId>redbook-starter-jackson</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

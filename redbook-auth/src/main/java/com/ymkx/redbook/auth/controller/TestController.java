@@ -6,6 +6,8 @@ import com.ymkx.framework.biz.operationlog.aspect.ApiOperationLog;
 import com.ymkx.framework.common.response.Response;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -25,5 +27,12 @@ public class TestController {
     public Response<UserDO> test2() {
         UserDO userDO = userMapper.selectById(1953035569446219778L);
         return Response.success(userDO);
+    }
+
+    @PostMapping("/test3")
+    @ApiOperationLog(description = "测试接口3")
+    public Response<UserDO> test3(@RequestBody UserDO userDO) {
+        userMapper.insert(userDO);
+        return Response.success();
     }
 }
