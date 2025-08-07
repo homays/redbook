@@ -20,12 +20,6 @@
             <groupId>com.ymkx</groupId>
             <artifactId>redbook-common</artifactId>
         </dependency>
-
-        <!-- AOP 切面 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
     </dependencies>
 </project>
 
