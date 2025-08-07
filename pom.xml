@@ -48,6 +48,7 @@
         <mybatis-plus-join.version>1.5.4</mybatis-plus-join.version>
         <mysql-connector-java.version>8.0.29</mysql-connector-java.version>
         <hutool.version>5.8.38</hutool.version>
+        <druid.version>1.2.21</druid.version>
     </properties>
 
     <!-- 统一依赖管理 -->
@@ -136,6 +137,12 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-ai</artifactId>
                 <version>${hutool.version}</version>
+            </dependency>
+            <!-- Druid 数据库连接池 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-3-starter</artifactId>
+                <version>${druid.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
