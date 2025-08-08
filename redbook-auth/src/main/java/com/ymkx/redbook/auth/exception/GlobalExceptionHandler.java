@@ -30,6 +30,13 @@ public class GlobalExceptionHandler {
         return Response.fail(e);
     }
 
+    @ExceptionHandler({IllegalArgumentException.class})
+    @ResponseBody
+    public Response<Object> handleIllegalArgumentException(HttpServletRequest request, IllegalArgumentException e) {
+        log.warn("{} request fail, errorMessage: {}", request.getRequestURI(), e.getMessage());
+        return Response.fail(e.getMessage());
+    }
+
     /**
      * 捕获参数校验异常
      *

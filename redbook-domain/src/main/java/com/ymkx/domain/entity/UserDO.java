@@ -24,7 +24,7 @@ public class UserDO {
     /**
      * redbook(唯一凭证)
      */
-    private String usreId;
+    private String userId;
 
     private String password;
 
