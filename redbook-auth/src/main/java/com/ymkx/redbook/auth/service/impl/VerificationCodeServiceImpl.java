@@ -34,6 +34,9 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
         }
 
         String code = RandomUtil.randomNumbers(6);
+        // todo: 调用阿里云验证码服务
+
+        log.info("发送验证码: {}, 手机号: {}", code, phone);
 
         redisTemplate.opsForValue().set(key, code, VERIFICATION_CODE_KEY.getTime(), TimeUnit.SECONDS);
 
