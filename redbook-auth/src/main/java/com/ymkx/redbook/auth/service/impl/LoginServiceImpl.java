@@ -2,8 +2,8 @@ package com.ymkx.redbook.auth.service.impl;
 
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.ObjectUtil;
+import com.google.common.base.Preconditions;
 import com.ymkx.domain.entity.UserDO;
 import com.ymkx.domain.entity.UserRoleRelDO;
 import com.ymkx.domain.mapper.UserMapper;
@@ -20,6 +20,7 @@ import com.ymkx.redbook.auth.service.LoginService;
 import com.ymkx.redbook.auth.service.UserRegisterService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -58,7 +59,8 @@ public class LoginServiceImpl implements LoginService {
         String userId = null;
         switch (Objects.requireNonNull(loginTypeEnum)) {
             case VERIFICATION_CODE:
-                Assert.notNull(req.getCode(), "验证码不能为空");
+                // 校验入参验证码是否为空
+                Preconditions.checkArgument(StringUtils.isNotBlank(req.getCode()), "验证码不能为空");
 
                 String phone = req.getPhone();
                 String key = RedisKeyEnums.buildVerificationCodeKey(phone);
