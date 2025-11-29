@@ -1,20 +1,31 @@
 package com.ymkx.redbook.auth.service.impl;
 
+import cn.dev33.satoken.stp.SaTokenInfo;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.ObjectUtil;
 import com.ymkx.domain.entity.UserDO;
+import com.ymkx.domain.entity.UserRoleRelDO;
 import com.ymkx.domain.mapper.UserMapper;
+import com.ymkx.domain.mapper.UserRoleRelMapper;
+import com.ymkx.framework.common.constant.RedisKeyConstants;
 import com.ymkx.framework.common.enums.RedisKeyEnums;
 import com.ymkx.framework.common.enums.ResponseCodeEnum;
 import com.ymkx.framework.common.exception.BizException;
 import com.ymkx.framework.common.response.Response;
+import com.ymkx.framework.common.util.JsonUtils;
 import com.ymkx.redbook.auth.enums.LoginTypeEnum;
 import com.ymkx.redbook.auth.request.LoginReq;
 import com.ymkx.redbook.auth.service.LoginService;
+import com.ymkx.redbook.auth.service.UserRegisterService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Service
@@ -22,13 +33,30 @@ import org.springframework.stereotype.Service;
 public class LoginServiceImpl implements LoginService {
 
     private final UserMapper userMapper;
+    private final UserRoleRelMapper userRoleRelMapper;
+    private final UserRegisterService userRegisterService;
     private final RedisTemplate<String, Object> redisTemplate;
 
     @Override
     public Response<String> login(LoginReq req) {
         LoginTypeEnum loginTypeEnum = LoginTypeEnum.getByType(req.getType());
 
-        switch (loginTypeEnum) {
+        // 获取登录用户 ID
+        String userId = getLoginUserId(req, loginTypeEnum);
+
+        // 授权
+        this.authorize(userId);
+
+        // SaToken 登录用户，并返回 token 令牌
+        StpUtil.login(userId);
+        SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
+
+        return Response.success(tokenInfo.tokenValue);
+    }
+
+    private String getLoginUserId(LoginReq req, LoginTypeEnum loginTypeEnum) {
+        String userId = null;
+        switch (Objects.requireNonNull(loginTypeEnum)) {
             case VERIFICATION_CODE:
                 Assert.notNull(req.getCode(), "验证码不能为空");
 
@@ -42,12 +70,12 @@ public class LoginServiceImpl implements LoginService {
                 UserDO userDO = userMapper.selectByPhone(phone);
                 if (ObjectUtil.isNull(userDO)) {
                     // 注册用户
+                    userId = userRegisterService.registerUser(phone);
                 } else {
                     // 登录
-                    String userId = userDO.getUserId();
+                    userId = userDO.getUserId();
                 }
-
-                break;
+                return userId;
             case PASSWORD:
                 // todo 密码登录
                 break;
@@ -55,9 +83,12 @@ public class LoginServiceImpl implements LoginService {
                 break;
         }
 
-        // SaToken 登录用户，并返回 token 令牌
-        // todo
+        return userId;
+    }
 
-        return Response.success();
+    private void authorize(String userId) {
+        List<UserRoleRelDO> userRoleRelDOList = userRoleRelMapper.selectListByUserid(userId);
+        String userRoleKey = RedisKeyConstants.buildUserRoleKey(userId);
+        redisTemplate.opsForValue().set(userRoleKey, JsonUtils.toJsonString(userRoleRelDOList), 3, TimeUnit.HOURS);
     }
 }

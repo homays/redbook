@@ -51,6 +51,7 @@
         <druid.version>1.2.21</druid.version>
         <flatten-maven-plugin.version>1.5.0</flatten-maven-plugin.version>
         <sa-token.version>1.38.0</sa-token.version>
+        <fastjson.version>2.0.60</fastjson.version>
     </properties>
 
     <!-- 统一依赖管理 -->
@@ -162,6 +163,12 @@
                 <groupId>cn.dev33</groupId>
                 <artifactId>sa-token-redis-jackson</artifactId>
                 <version>${sa-token.version}</version>
+            </dependency>
+            <!-- FastJson2 -->
+            <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2</artifactId>
+                <version>${fastjson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

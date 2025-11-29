@@ -1,5 +1,6 @@
 package com.ymkx.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -17,12 +17,7 @@ import java.util.Date;
 public class UserDO {
 
     /**
-     * 主键id
-     */
-    private Long id;
-
-    /**
-     * redbook(唯一凭证)
+     * 用户id
      */
     private String userId;
 
@@ -35,7 +30,7 @@ public class UserDO {
     /**
      * 生日
      */
-    private Date birthday;
+    private LocalDateTime birthday;
 
     private String backgroundImg;
 
@@ -59,16 +54,17 @@ public class UserDO {
     /**
      * 创建时间
      */
-    private Date createTime;
+    private LocalDateTime createTime;
 
     /**
      * 更新时间
      */
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
     /**
      * 逻辑删除(0：未删除 1：已删除)
      */
+    @TableLogic
     private boolean isDeleted;
 }
 
