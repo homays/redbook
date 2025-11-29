@@ -11,7 +11,7 @@
  Target Server Version : 80043 (8.0.43)
  File Encoding         : 65001
 
- Date: 11/08/2025 14:51:32
+ Date: 29/11/2025 16:25:47
 */
 
 SET NAMES utf8mb4;
@@ -91,8 +91,7 @@ INSERT INTO `t_role_permission_rel` VALUES (2, 1, 2, '2025-08-08 10:54:35', '202
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user`;
 CREATE TABLE `t_user`  (
-  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `user_id` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'redbook(唯一凭证)',
+  `user_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '用户id',
   `password` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '密码',
   `nickname` varchar(24) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '昵称',
   `avatar` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '头像',
@@ -105,14 +104,14 @@ CREATE TABLE `t_user`  (
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   `is_deleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '逻辑删除(0：未删除 1：已删除)',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `uk_phone`(`phone` ASC) USING BTREE,
-  UNIQUE INDEX `uk_user_id`(`user_id` ASC) USING BTREE
+  PRIMARY KEY (`user_id`) USING BTREE,
+  UNIQUE INDEX `uk_phone`(`phone` ASC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
+INSERT INTO `t_user` VALUES ('1994679762845163520', NULL, 'redbook_9665', NULL, NULL, NULL, '18740149665', 0, 0, NULL, '2025-11-29 16:08:09', '2025-11-29 16:08:09', b'0');
 
 -- ----------------------------
 -- Table structure for t_user_role_rel
@@ -120,16 +119,17 @@ CREATE TABLE `t_user`  (
 DROP TABLE IF EXISTS `t_user_role_rel`;
 CREATE TABLE `t_user_role_rel`  (
   `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `user_id` bigint UNSIGNED NOT NULL COMMENT '用户ID',
+  `user_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '用户ID',
   `role_id` bigint UNSIGNED NOT NULL COMMENT '角色ID',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   `is_deleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '逻辑删除(0：未删除 1：已删除)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '用户角色表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '用户角色表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user_role_rel
 -- ----------------------------
+INSERT INTO `t_user_role_rel` VALUES (1, '1994679762845163520', 1, '2025-11-29 16:08:10', '2025-11-29 16:08:10', b'0');
 
 SET FOREIGN_KEY_CHECKS = 1;
