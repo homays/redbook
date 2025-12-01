@@ -1,16 +1,15 @@
 package com.ymkx.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -47,5 +46,6 @@ public class RolePermissionRelDO {
     /**
      * 逻辑删除(0：未删除 1：已删除)
      */
+    @TableLogic
     private Boolean isDeleted;
 }
