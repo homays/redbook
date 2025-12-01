@@ -24,4 +24,10 @@ public class LoginController {
         return loginService.login(req);
     }
 
+    @PostMapping("/logout")
+    @ApiOperationLog(description = "账户登出")
+    public Response<?> logout() {
+        return Response.success();
+    }
+
 }
