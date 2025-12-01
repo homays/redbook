@@ -11,12 +11,6 @@
     <!-- 项目名称 -->
     <name>${project.artifactId}</name>
     <!-- 项目描述 -->
-    <description>redbook（仿小红书），基于 Spring Cloud Alibaba 微服务架构</description>
-
-    <!-- 多模块项目需要配置打包方式为 pom -->
-    <packaging>pom</packaging>
-
-    <!-- 子模块管理 -->
     <modules>
         <!-- 认证服务 -->
         <module>redbook-auth</module>
@@ -24,7 +18,15 @@
         <module>redbook-framework</module>
         <!-- 实体层 -->
         <module>redbook-domain</module>
+        <!-- 网关服务 -->
+        <module>redbook-gateway</module>
     </modules>
+
+    <!-- 多模块项目需要配置打包方式为 pom -->
+    <description>redbook（仿小红书），基于 Spring Cloud Alibaba 微服务架构</description>
+
+    <!-- 子模块管理 -->
+    <packaging>pom</packaging>
 
     <properties>
         <!-- 项目版本号 -->
