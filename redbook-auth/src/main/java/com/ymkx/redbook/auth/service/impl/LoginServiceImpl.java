@@ -3,9 +3,10 @@ package com.ymkx.redbook.auth.service.impl;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson2.JSON;
 import com.google.common.base.Preconditions;
 import com.ymkx.domain.entity.UserDO;
-import com.ymkx.domain.entity.UserRoleRelDO;
 import com.ymkx.domain.mapper.UserMapper;
 import com.ymkx.domain.mapper.UserRoleRelMapper;
 import com.ymkx.framework.common.constant.RedisKeyConstants;
@@ -13,7 +14,6 @@ import com.ymkx.framework.common.enums.RedisKeyEnums;
 import com.ymkx.framework.common.enums.ResponseCodeEnum;
 import com.ymkx.framework.common.exception.BizException;
 import com.ymkx.framework.common.response.Response;
-import com.ymkx.framework.common.util.JsonUtils;
 import com.ymkx.redbook.auth.enums.LoginTypeEnum;
 import com.ymkx.redbook.auth.request.LoginReq;
 import com.ymkx.redbook.auth.service.LoginService;
@@ -21,7 +21,7 @@ import com.ymkx.redbook.auth.service.UserRegisterService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,7 +36,7 @@ public class LoginServiceImpl implements LoginService {
     private final UserMapper userMapper;
     private final UserRoleRelMapper userRoleRelMapper;
     private final UserRegisterService userRegisterService;
-    private final RedisTemplate<String, Object> redisTemplate;
+    private final StringRedisTemplate stringRedisTemplate;
 
     @Override
     public Response<String> login(LoginReq req) {
@@ -65,7 +65,7 @@ public class LoginServiceImpl implements LoginService {
                 String phone = req.getPhone();
                 String key = RedisKeyEnums.buildVerificationCodeKey(phone);
 
-                if (ObjectUtil.notEqual(redisTemplate.opsForValue().get(key), req.getCode())) {
+                if (StrUtil.equals(stringRedisTemplate.opsForValue().get(key), req.getCode())) {
                     throw new BizException(ResponseCodeEnum.VERIFICATION_CODE_ERROR);
                 }
 
@@ -89,8 +89,9 @@ public class LoginServiceImpl implements LoginService {
     }
 
     private void authorize(String userId) {
-        List<UserRoleRelDO> userRoleRelDOList = userRoleRelMapper.selectListByUserid(userId);
+        List<String> RoleKeyList = userRoleRelMapper.selectRoleKeyByUserId(userId);
+
         String userRoleKey = RedisKeyConstants.buildUserRoleKey(userId);
-        redisTemplate.opsForValue().set(userRoleKey, JsonUtils.toJsonString(userRoleRelDOList), 3, TimeUnit.HOURS);
+        stringRedisTemplate.opsForValue().set(userRoleKey, JSON.toJSONString(RoleKeyList), 3, TimeUnit.HOURS);
     }
 }

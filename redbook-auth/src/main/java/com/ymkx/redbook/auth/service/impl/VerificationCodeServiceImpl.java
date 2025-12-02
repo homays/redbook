@@ -8,7 +8,7 @@ import com.ymkx.redbook.auth.request.SendVerificationCodeReq;
 import com.ymkx.redbook.auth.service.VerificationCodeService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
@@ -21,7 +21,7 @@ import static com.ymkx.framework.common.enums.RedisKeyEnums.buildVerificationCod
 public class VerificationCodeServiceImpl implements VerificationCodeService {
 
     @Resource
-    private RedisTemplate<String, Object> redisTemplate;
+    private StringRedisTemplate stringRedisTemplate;
 
     @Override
     public Response<?> send(SendVerificationCodeReq req) {
@@ -29,7 +29,7 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
 
         String key = buildVerificationCodeKey(phone);
 
-        if (redisTemplate.hasKey(key)) {
+        if (stringRedisTemplate.hasKey(key)) {
             throw new BizException(ResponseCodeEnum.VERIFICATION_CODE_SEND_FREQUENTLY);
         }
 
@@ -38,7 +38,7 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
 
         log.info("发送验证码: {}, 手机号: {}", code, phone);
 
-        redisTemplate.opsForValue().set(key, code, VERIFICATION_CODE_KEY.getTime(), TimeUnit.SECONDS);
+        stringRedisTemplate.opsForValue().set(key, code, VERIFICATION_CODE_KEY.getTime(), TimeUnit.SECONDS);
 
         return Response.success();
     }
