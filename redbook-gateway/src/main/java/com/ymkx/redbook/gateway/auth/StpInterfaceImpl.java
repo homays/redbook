@@ -4,7 +4,6 @@ import cn.dev33.satoken.stp.StpInterface;
 import cn.hutool.core.collection.CollUtil;
 import com.alibaba.cloud.commons.lang.StringUtils;
 import com.alibaba.fastjson2.JSON;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ymkx.framework.common.constant.RedisKeyConstants;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -23,8 +22,6 @@ public class StpInterfaceImpl implements StpInterface {
 
     @Resource
     private StringRedisTemplate stringRedisTemplate;
-    @Resource
-    private ObjectMapper objectMapper;
 
     @Override
     public List<String> getPermissionList(Object loginId, String loginType) {
