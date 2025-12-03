@@ -27,6 +27,7 @@ public class LoginController {
     @PostMapping("/logout")
     @ApiOperationLog(description = "账户登出")
     public Response<?> logout() {
+        loginService.logout();
         return Response.success();
     }
 

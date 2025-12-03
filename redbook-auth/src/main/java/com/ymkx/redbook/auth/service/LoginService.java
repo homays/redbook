@@ -12,4 +12,8 @@ public interface LoginService {
      */
     Response<String> login(LoginReq req);
 
+    /**
+     * 登出
+     */
+    void logout();
 }
