@@ -1,0 +1,21 @@
+package com.ymkx.redbook.auth.request;
+
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+/**
+ * @author ymkx
+ */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class UpdatePasswordReq {
+
+    @NotBlank(message = "新密码不能为空")
+    private String newPassword;
+
+}

@@ -7,22 +7,31 @@ import com.ymkx.domain.mapper.UserRoleRelMapper;
 import com.ymkx.framework.common.constant.RoleConstants;
 import com.ymkx.framework.common.enums.DeletedEnum;
 import com.ymkx.framework.common.enums.StatusEnum;
+import com.ymkx.framework.common.response.Response;
 import com.ymkx.framework.common.util.UidGeneratorUtils;
-import com.ymkx.redbook.auth.service.UserRegisterService;
+import com.ymkx.redbook.auth.request.UpdatePasswordReq;
+import com.ymkx.redbook.auth.service.UserService;
+import com.ymkx.redbook.context.holder.LoginUserContextHolder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
+/**
+ * @author ymkx
+ */
 @Service
 @RequiredArgsConstructor
-public class UserRegisterServiceImpl implements UserRegisterService {
+public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
     private final UserRoleRelMapper userRoleRelMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional(rollbackFor = Exception.class)
+    @Override
     public String registerUser(String phone) {
         String userId = UidGeneratorUtils.getUid();
 
@@ -50,4 +59,17 @@ public class UserRegisterServiceImpl implements UserRegisterService {
 
         return userId;
     }
+
+    @Override
+    public Response<?> updatePassword(UpdatePasswordReq req) {
+        String newPassword = req.getNewPassword();
+        String encodePassword = passwordEncoder.encode(newPassword);
+
+        String userId = LoginUserContextHolder.getUserId();
+        // 修改密码
+        userMapper.updatePassword(userId, encodePassword);
+
+        return Response.success();
+    }
+
 }

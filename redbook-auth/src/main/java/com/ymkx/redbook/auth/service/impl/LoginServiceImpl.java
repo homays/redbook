@@ -16,7 +16,7 @@ import com.ymkx.framework.common.response.Response;
 import com.ymkx.redbook.auth.enums.LoginTypeEnum;
 import com.ymkx.redbook.auth.request.LoginReq;
 import com.ymkx.redbook.auth.service.LoginService;
-import com.ymkx.redbook.auth.service.UserRegisterService;
+import com.ymkx.redbook.auth.service.UserService;
 import com.ymkx.redbook.context.holder.LoginUserContextHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +27,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author ymkx
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -34,7 +37,7 @@ public class LoginServiceImpl implements LoginService {
 
     private final UserMapper userMapper;
     private final UserRoleRelMapper userRoleRelMapper;
-    private final UserRegisterService userRegisterService;
+    private final UserService userService;
     private final StringRedisTemplate stringRedisTemplate;
 
     @Override
@@ -80,7 +83,7 @@ public class LoginServiceImpl implements LoginService {
                 UserDO userDO = userMapper.selectByPhone(phone);
                 if (ObjectUtil.isNull(userDO)) {
                     // 注册用户
-                    userId = userRegisterService.registerUser(phone);
+                    userId = userService.registerUser(phone);
                 } else {
                     // 登录
                     userId = userDO.getUserId();
