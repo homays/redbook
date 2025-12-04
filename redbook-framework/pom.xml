@@ -24,6 +24,8 @@
         <module>redbook-starter-biz-operationlog</module>
         <!-- jackson 组件 -->
         <module>redbook-starter-jackson</module>
+        <!-- 业务上下文组件 -->
+        <module>redbook-starter-biz-context</module>
     </modules>
 
 </project>

@@ -110,6 +110,11 @@
                 <artifactId>redbook-starter-jackson</artifactId>
                 <version>${revision}</version>
             </dependency>
+            <dependency>
+                <groupId>com.ymkx</groupId>
+                <artifactId>redbook-starter-biz-context</artifactId>
+                <version>${revision}</version>
+            </dependency>
 
             <!-- 第三方服务 -->
             <dependency>

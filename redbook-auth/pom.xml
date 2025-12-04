@@ -42,6 +42,11 @@
 
         <dependency>
             <groupId>com.ymkx</groupId>
+            <artifactId>redbook-starter-biz-context</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ymkx</groupId>
             <artifactId>redbook-domain</artifactId>
         </dependency>
 

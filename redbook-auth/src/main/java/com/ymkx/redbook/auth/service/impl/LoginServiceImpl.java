@@ -14,10 +14,10 @@ import com.ymkx.framework.common.enums.ResponseCodeEnum;
 import com.ymkx.framework.common.exception.BizException;
 import com.ymkx.framework.common.response.Response;
 import com.ymkx.redbook.auth.enums.LoginTypeEnum;
-import com.ymkx.redbook.auth.filter.LoginUserContextHolder;
 import com.ymkx.redbook.auth.request.LoginReq;
 import com.ymkx.redbook.auth.service.LoginService;
 import com.ymkx.redbook.auth.service.UserRegisterService;
+import com.ymkx.redbook.context.holder.LoginUserContextHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -73,7 +73,7 @@ public class LoginServiceImpl implements LoginService {
                 String phone = req.getPhone();
                 String key = RedisKeyEnums.buildVerificationCodeKey(phone);
 
-                if (StrUtil.equals(stringRedisTemplate.opsForValue().get(key), req.getCode())) {
+                if (!StrUtil.equals(stringRedisTemplate.opsForValue().get(key), req.getCode())) {
                     throw new BizException(ResponseCodeEnum.VERIFICATION_CODE_ERROR);
                 }
 

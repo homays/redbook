@@ -1,6 +1,7 @@
-package com.ymkx.redbook.auth.filter;
+package com.ymkx.redbook.context.filter;
 
 import com.ymkx.framework.common.constant.GlobalConstants;
+import com.ymkx.redbook.context.holder.LoginUserContextHolder;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
