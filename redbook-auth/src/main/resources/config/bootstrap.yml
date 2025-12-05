@@ -17,3 +17,8 @@ spring:
         group: DEFAULT_GROUP # 所属组
         namespace: redbook # 命名空间
         server-addr: 127.0.0.1:8848 # 指定 Nacos 配置中心的服务器地址
+
+forest:
+  max-connections: 1000        # 连接池最大连接数
+  connect-timeout: 3000        # 连接超时时间，单位为毫秒
+  read-timeout: 3000           # 数据读取超时时间，单位为毫秒

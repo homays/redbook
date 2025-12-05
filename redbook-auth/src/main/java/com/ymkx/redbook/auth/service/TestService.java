@@ -4,7 +4,10 @@ import com.alibaba.fastjson2.JSON;
 import com.dtzhejiang.openapi.sdk.OpenApiClient;
 import com.dtzhejiang.openapi.sdk.request.UicRegionQueryRegionTreeRequest;
 import com.dtzhejiang.openapi.sdk.response.UicRegionQueryRegionTreeResponse;
+import com.ymkx.redbook.auth.client.MyClient;
+import com.ymkx.redbook.auth.request.QQUserInfo;
 import com.ymkx.redbook.auth.request.SendVerificationCodeReq;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
@@ -21,6 +24,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class TestService {
 
     private AtomicInteger count = new AtomicInteger(0);
+
+    @Resource
+    private MyClient myClient;
 
     @Retryable(listeners = {"logRetryListener"})
     public void test(SendVerificationCodeReq sms) {
@@ -48,5 +54,10 @@ public class TestService {
 
         log.info("Response data: {}", JSON.toJSONString(response.getData()));
         log.info("接口执行时间: {} 毫秒", executionTime);
+    }
+
+    public void test2(String qq) {
+        QQUserInfo qqUserInfo = myClient.getQqInfo(qq);
+        //log.info("qqInfo: {}", JSON.toJSONString(qqUserInfo));
     }
 }
