@@ -3,8 +3,12 @@ package com.ymkx.redbook.auth;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.retry.annotation.EnableRetry;
 
+/**
+ * @author ymkx
+ */
+@EnableRetry
 @SpringBootApplication
 @MapperScan("com.ymkx.domain.mapper")
 public class RedbookAuthApplication {
