@@ -25,7 +25,7 @@ public class UserController {
     @PostMapping("/password/update")
     @ApiOperationLog(description = "修改密码")
     public Response<?> updatePassword(@Valid UpdatePasswordReq request) {
-        return Response.success(userservice.updatePassword(request));
+        return userservice.updatePassword(request);
     }
 
 }

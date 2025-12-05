@@ -4,7 +4,9 @@ import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.cloud.commons.lang.StringUtils;
 import com.alibaba.fastjson2.JSON;
+import com.google.common.base.Preconditions;
 import com.ymkx.domain.entity.UserDO;
 import com.ymkx.domain.mapper.UserMapper;
 import com.ymkx.domain.mapper.UserRoleRelMapper;
@@ -21,6 +23,7 @@ import com.ymkx.redbook.context.holder.LoginUserContextHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,6 +42,7 @@ public class LoginServiceImpl implements LoginService {
     private final UserRoleRelMapper userRoleRelMapper;
     private final UserService userService;
     private final StringRedisTemplate stringRedisTemplate;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public Response<String> login(LoginReq req) {
@@ -72,6 +76,7 @@ public class LoginServiceImpl implements LoginService {
         switch (Objects.requireNonNull(loginTypeEnum)) {
             case VERIFICATION_CODE:
                 // 校验入参验证码是否为空
+                Preconditions.checkArgument(StringUtils.isNotBlank(req.getCode()), "验证码不能为空");
 
                 String phone = req.getPhone();
                 String key = RedisKeyEnums.buildVerificationCodeKey(phone);
@@ -88,9 +93,22 @@ public class LoginServiceImpl implements LoginService {
                     // 登录
                     userId = userDO.getUserId();
                 }
-                return userId;
+                break;
             case PASSWORD:
-                // todo 密码登录
+                Preconditions.checkArgument(StringUtils.isNotBlank(req.getPassword()), "密码不能为空");
+
+                String password = req.getPassword();
+                UserDO dbUser = userMapper.selectByPhone(req.getPhone());
+                if (ObjectUtil.isNull(dbUser)) {
+                    throw new BizException(ResponseCodeEnum.USER_NOT_FOUND);
+                }
+                if (StringUtils.isBlank(dbUser.getPassword())) {
+                    throw new BizException(ResponseCodeEnum.PASSWORD_REQUIRE_ERROR);
+                }
+                if(!passwordEncoder.matches(password, dbUser.getPassword())) {
+                    throw new BizException(ResponseCodeEnum.PHONE_OR_PASSWORD_ERROR);
+                }
+                userId = dbUser.getUserId();
                 break;
             default:
                 break;
