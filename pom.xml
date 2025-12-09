@@ -20,6 +20,8 @@
         <module>redbook-domain</module>
         <!-- 网关服务 -->
         <module>redbook-gateway</module>
+        <!-- 用户服务 -->
+        <module>redbook-user</module>
     </modules>
 
     <!-- 多模块项目需要配置打包方式为 pom -->
