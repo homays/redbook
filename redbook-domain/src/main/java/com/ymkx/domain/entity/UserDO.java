@@ -1,5 +1,6 @@
 package com.ymkx.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ public class UserDO {
     /**
      * 用户id
      */
+    @TableId
     private String userId;
 
     private String password;

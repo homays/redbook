@@ -1,7 +1,8 @@
-package com.ymkx.redbook.auth.service;
+package com.ymkx.redbook.user.biz.service;
 
 import com.ymkx.framework.common.response.Response;
-import com.ymkx.redbook.auth.request.UpdatePasswordReq;
+import com.ymkx.redbook.user.biz.request.UpdatePasswordReq;
+import com.ymkx.redbook.user.request.RegisterUserReqDTO;
 
 /**
  * @author ymkx
@@ -10,11 +11,8 @@ public interface UserService {
 
     /**
      * 注册用户
-     *
-     * @param phone 手机号
-     * @return 用户ID
      */
-    String registerUser(String phone);
+    Response<String> register(RegisterUserReqDTO registerUserReqDTO);
 
 
     /**

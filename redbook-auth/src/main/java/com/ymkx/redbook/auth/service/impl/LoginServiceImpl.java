@@ -17,8 +17,8 @@ import com.ymkx.framework.common.exception.BizException;
 import com.ymkx.framework.common.response.Response;
 import com.ymkx.redbook.auth.enums.LoginTypeEnum;
 import com.ymkx.redbook.auth.request.LoginReq;
+import com.ymkx.redbook.auth.rpc.UserRpcService;
 import com.ymkx.redbook.auth.service.LoginService;
-import com.ymkx.redbook.auth.service.UserService;
 import com.ymkx.redbook.context.holder.LoginUserContextHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,9 +40,9 @@ public class LoginServiceImpl implements LoginService {
 
     private final UserMapper userMapper;
     private final UserRoleRelMapper userRoleRelMapper;
-    private final UserService userService;
     private final StringRedisTemplate stringRedisTemplate;
     private final PasswordEncoder passwordEncoder;
+    private final UserRpcService userRpcService;
 
     @Override
     public Response<String> login(LoginReq req) {
@@ -85,13 +85,9 @@ public class LoginServiceImpl implements LoginService {
                     throw new BizException(ResponseCodeEnum.VERIFICATION_CODE_ERROR);
                 }
 
-                UserDO userDO = userMapper.selectByPhone(phone);
-                if (ObjectUtil.isNull(userDO)) {
-                    // 注册用户
-                    userId = userService.registerUser(phone);
-                } else {
-                    // 登录
-                    userId = userDO.getUserId();
+                userId = userRpcService.registerUser(phone);
+                if (StringUtils.isBlank(userId)) {
+                    throw new BizException(ResponseCodeEnum.LOGIN_FAIL);
                 }
                 break;
             case PASSWORD:

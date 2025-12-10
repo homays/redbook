@@ -1,4 +1,4 @@
-package com.ymkx.redbook.auth.request;
+package com.ymkx.redbook.user.biz.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

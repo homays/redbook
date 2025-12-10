@@ -1,5 +1,6 @@
-package com.ymkx.redbook.auth.service.impl;
+package com.ymkx.redbook.user.biz.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.ymkx.domain.entity.UserDO;
 import com.ymkx.domain.entity.UserRoleRelDO;
 import com.ymkx.domain.mapper.UserMapper;
@@ -9,9 +10,10 @@ import com.ymkx.framework.common.enums.DeletedEnum;
 import com.ymkx.framework.common.enums.StatusEnum;
 import com.ymkx.framework.common.response.Response;
 import com.ymkx.framework.common.util.UidGeneratorUtils;
-import com.ymkx.redbook.auth.request.UpdatePasswordReq;
-import com.ymkx.redbook.auth.service.UserService;
 import com.ymkx.redbook.context.holder.LoginUserContextHolder;
+import com.ymkx.redbook.user.biz.request.UpdatePasswordReq;
+import com.ymkx.redbook.user.biz.service.UserService;
+import com.ymkx.redbook.user.request.RegisterUserReqDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,7 +34,14 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public String registerUser(String phone) {
+    public Response<String> register(RegisterUserReqDTO registerUserReqDTO) {
+        String phone = registerUserReqDTO.getPhone();
+        UserDO dbUser = userMapper.selectByPhone(phone);
+
+        if (ObjectUtil.isNotNull(dbUser)) {
+            return Response.success(dbUser.getUserId());
+        }
+
         String userId = UidGeneratorUtils.getUid();
 
         UserDO userDO = UserDO.builder()
@@ -57,7 +66,7 @@ public class UserServiceImpl implements UserService {
 
         userRoleRelMapper.insert(userRoleRelDO);
 
-        return userId;
+        return Response.success(userId);
     }
 
     @Override

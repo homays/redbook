@@ -1,4 +1,4 @@
-package com.ymkx.redbook.auth.runner;
+package com.ymkx.redbook.user.biz.runner;
 
 import cn.hutool.core.collection.CollUtil;
 import com.alibaba.fastjson2.JSON;
@@ -21,6 +21,9 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+/**
+ * @author ymkx
+ */
 @Slf4j
 @Component
 @AllArgsConstructor
