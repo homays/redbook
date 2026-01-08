@@ -1,7 +1,6 @@
 package com.ymkx.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -66,7 +65,6 @@ public class UserDO {
     /**
      * 逻辑删除(0：未删除 1：已删除)
      */
-    @TableLogic
     private boolean isDeleted;
 }
 
