@@ -10,6 +10,7 @@ import com.ymkx.authentication.request.BaseRequest;
 public class AuthenticationConvertor {
 
     public static <R extends BaseRequest> void buildParam(R request) {
+        // 封装公共请求参数，比如userId
         request.setAuthType(request.getAuthType());
     }
 
