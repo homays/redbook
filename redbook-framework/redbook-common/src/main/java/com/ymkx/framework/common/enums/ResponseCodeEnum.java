@@ -28,6 +28,11 @@ public enum ResponseCodeEnum implements BaseExceptionInterface {
     // ----------- 网关异常状态码 -----------
     GATEWAY_ERROR("500", "系统繁忙，请稍后再试"),
     UNAUTHORIZED("401", "权限不足"),
+
+
+    // ----------- 认证异常状态码 -----------
+    AUTHENTICATION_ABILITY_ERROR("AUTHENTICATION-30001", "认证能力不存在")
+
     ;
 
     // 异常码

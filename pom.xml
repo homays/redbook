@@ -22,6 +22,7 @@
         <module>redbook-gateway</module>
         <!-- 用户服务 -->
         <module>redbook-user</module>
+        <module>redbook-authentication</module>
     </modules>
 
     <!-- 多模块项目需要配置打包方式为 pom -->
