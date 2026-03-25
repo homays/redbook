@@ -16,11 +16,6 @@ import java.util.Map;
 public class AuthenticationResultRequest extends BaseRequest {
 
     /**
-     * 全局请求ID
-     */
-    private String authRequestId;
-
-    /**
      * 业务参数
      */
     private Map<String,  Object> authenticationParam;

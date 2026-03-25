@@ -15,11 +15,6 @@ import java.util.Map;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AuthenticationStatusRequest extends BaseRequest {
 
-    /**
-     * 认证码
-     */
-    private String authRequestId;
-
     private Map<String,  Object> authenticationParam;
 
 }

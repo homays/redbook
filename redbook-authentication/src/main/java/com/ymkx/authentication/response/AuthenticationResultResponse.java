@@ -7,14 +7,9 @@ import java.util.Map;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class AuthenticationResultResponse extends AuthenticationStatusResponse {
+public class AuthenticationResultResponse extends BaseResponse {
 
     private Boolean pass;
-
-    /**
-     * 临时票据，可用来获取用户信息
-     */
-    private String accessToken;
 
     private String errorMsg;
 

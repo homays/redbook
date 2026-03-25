@@ -52,9 +52,11 @@ public class TestAAbility implements AuthenticationAbility {
 
         TestAAuthenticationRequest request = context.getAuthenticationParam();
         // TODO: 进行认证的操作，以及封装结果
+        context.setPass(Boolean.TRUE);
         context.setAuthStatus(AuthStatusEnum.SUCCESS);
         authenticationContextService.store(context);
-        authenticationContextService.remove(context.getAuthType(), context.getAuthRequestId());
+        // 看实际业务逻辑，是否需要移除认证上下文
+        //authenticationContextService.remove(context.getAuthType(), context.getAuthRequestId());
         return AuthenticationResult.result(context);
     }
 
