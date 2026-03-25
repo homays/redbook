@@ -24,8 +24,9 @@ public class TestAAbility implements AuthenticationAbility {
     public AuthenticationResult authenticationPrepare(AuthenticationParam param) {
         AuthenticationContext<TestAAuthenticationRequest, TestAAuthenticationResponse> context = buildAuthenticationContext(param, TestAAuthenticationRequest.class);
         TestAAuthenticationRequest request = context.getAuthenticationParam();
+        // 可以进行非空判断等操作
         authenticationContextService.store(context);
-        return null;
+        return AuthenticationResult.result(context);
     }
 
 
